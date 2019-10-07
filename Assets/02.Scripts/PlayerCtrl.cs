@@ -26,11 +26,17 @@ public class PlayerCtrl : MonoBehaviour
     void Update()
     {
         //tr.position += Vector3.forward * 0.1f;
-        float v = Input.GetAxisRaw("Vertical");   // -1.0f ~ 0.0f ~ 1.0f
+        // GetAxis    : -1.0f ~ 0.0f ~ 1.0f
+        // GetAxisRaw : -1, 0, +1
+        float v = Input.GetAxisRaw("Vertical");   // 
         float h = Input.GetAxisRaw("Horizontal"); // -1.0f ~ 0.0f ~ 1.0f
         
+        //벡터의 덧셈 연산
         Vector3 dir = (Vector3.forward * v) + (Vector3.right * h);
         
-        tr.Translate(dir.normalized * Time.deltaTime * moveSpeed);        
+        tr.Translate(dir.normalized * Time.deltaTime * moveSpeed); 
+
+        float r = Input.GetAxis("Mouse X");
+        tr.Rotate(Vector3.up * Time.deltaTime * 60.0f * r);       
     }
 }
