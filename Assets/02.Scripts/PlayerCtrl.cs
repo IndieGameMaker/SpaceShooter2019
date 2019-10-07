@@ -26,8 +26,11 @@ public class PlayerCtrl : MonoBehaviour
     void Update()
     {
         //tr.position += Vector3.forward * 0.1f;
-        float v = Input.GetAxis("Vertical");   // -1.0f ~ 0.0f ~ 1.0f
-        float h = Input.GetAxis("Horizontal"); // -1.0f ~ 0.0f ~ 1.0f
-        tr.Translate(Vector3.forward * moveSpeed * Time.deltaTime * v);
+        float v = Input.GetAxisRaw("Vertical");   // -1.0f ~ 0.0f ~ 1.0f
+        float h = Input.GetAxisRaw("Horizontal"); // -1.0f ~ 0.0f ~ 1.0f
+        
+        Vector3 dir = (Vector3.forward * v) + (Vector3.right * h);
+        
+        tr.Translate(dir.normalized * Time.deltaTime * moveSpeed);        
     }
 }
