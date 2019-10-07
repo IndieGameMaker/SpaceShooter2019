@@ -54,6 +54,32 @@ public class PlayerCtrl : MonoBehaviour
         tr.Translate(dir.normalized * Time.deltaTime * moveSpeed); 
 
         float r = Input.GetAxis("Mouse X");
-        tr.Rotate(Vector3.up * Time.deltaTime * 80.0f * r);       
+        tr.Rotate(Vector3.up * Time.deltaTime * 80.0f * r);
+
+        ChangeAnimation(h, v);    
+    }
+
+    void ChangeAnimation(float h, float v)
+    {
+        if (v >= 0.1f)
+        {
+            anim.CrossFade(_playerAnim.runForward.name, 0.3f);
+        }
+        else if (v <= -0.1f)
+        {
+            anim.CrossFade(_playerAnim.runBackward.name, 0.3f);
+        }
+        else if (h >= 0.1f)
+        {
+            anim.CrossFade(_playerAnim.runRight.name, 0.3f);
+        }
+        else if (h <= -0.1f)
+        {
+            anim.CrossFade(_playerAnim.runLeft.name, 0.3f);
+        }
+        else
+        {
+            anim.CrossFade(_playerAnim.idle.name, 0.3f);
+        }
     }
 }
