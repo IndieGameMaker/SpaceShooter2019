@@ -2,15 +2,32 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public class PlayerAnim
+{
+    public AnimationClip idle;
+    public AnimationClip runForward;
+    public AnimationClip runBackward;
+    public AnimationClip runLeft;
+    public AnimationClip runRight;
+}
+
+
 public class PlayerCtrl : MonoBehaviour
 {
+    public PlayerAnim  _playerAnim;
     [SerializeField]
     private Transform tr;
-    public float moveSpeed = 5.0f;
+    private Animation anim;
+    public float moveSpeed = 7.0f;
+
 
     void Start()
     {
         tr = GetComponent<Transform>();
+        anim = GetComponent<Animation>();
+        anim.clip = _playerAnim.idle;
+        anim.Play();
     }
 
     /*
@@ -37,6 +54,6 @@ public class PlayerCtrl : MonoBehaviour
         tr.Translate(dir.normalized * Time.deltaTime * moveSpeed); 
 
         float r = Input.GetAxis("Mouse X");
-        tr.Rotate(Vector3.up * Time.deltaTime * 60.0f * r);       
+        tr.Rotate(Vector3.up * Time.deltaTime * 80.0f * r);       
     }
 }

@@ -269,6 +269,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tr: {fileID: 0}
+  moveSpeed: 7
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
