@@ -12,7 +12,7 @@ public class FireCtrl : MonoBehaviour
     public AudioClip reloadSfx;
 
     public int magazineCount = 20;
-    private int shootCount = 0;
+    public int shootCount = 0;
     private bool isReloading = false;
 
     public float fireRate = 0.1f;
@@ -23,6 +23,7 @@ public class FireCtrl : MonoBehaviour
     {
         _audio = GetComponent<AudioSource>();
         fireSfx = Resources.Load<AudioClip>("Sfx/fire");
+        reloadSfx = Resources.Load<AudioClip>("Sfx/p_reload");
     }
     
     void Update()
