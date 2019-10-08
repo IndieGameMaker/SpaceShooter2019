@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class MonsterCtrl : MonoBehaviour
 {
@@ -19,11 +20,13 @@ public class MonsterCtrl : MonoBehaviour
 
     private Transform playerTr;         //주인공의 위치 추출을 위한 Transform
     private Transform monsterTr;        //몬스터의 위치 추출을 위한 Transform
+    private NavMeshAgent nv;            //NavMeshAgent 컴포넌트
 
     private WaitForSeconds ws = new WaitForSeconds(0.3f);
 
     void Start()
     {
+        nv = GetComponent<NavMeshAgent>();
         playerTr = GameObject.FindGameObjectWithTag("PLAYER").GetComponent<Transform>();
 
         GameObject monsterObj = GameObject.FindGameObjectWithTag("MONSTER");
@@ -37,6 +40,7 @@ public class MonsterCtrl : MonoBehaviour
         }
 
         StartCoroutine(CheckMonsterState());
+        StartCoroutine(MonsterAction());
     }
 
     IEnumerator CheckMonsterState()
@@ -68,8 +72,11 @@ public class MonsterCtrl : MonoBehaviour
             switch (state)
             {
                 case State.IDLE:
+                    nv.isStopped = true;
                     break;
                 case State.TRACE:
+                    nv.SetDestination(playerTr.position);
+                    nv.isStopped = false;
                     break;
                 case State.ATTACK:
                     break;
