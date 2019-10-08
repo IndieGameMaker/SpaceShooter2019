@@ -8,22 +8,27 @@ public class FireCtrl : MonoBehaviour
     public Transform firePos;
     public GameObject bulletPrefab;
     
-    public AudioClip fireSfx;
-    public AudioClip reloadSfx;
+    private AudioClip fireSfx;
+    private AudioClip reloadSfx;
 
     public int magazineCount = 20;
-    public int shootCount = 0;
+    private int shootCount = 0;
     private bool isReloading = false;
 
     public float fireRate = 0.1f;
     private float nextFire = 0.0f;
     private AudioSource _audio;
 
+    public MeshRenderer muzzleFlash;
+
     void Start()
     {
         _audio = GetComponent<AudioSource>();
         fireSfx = Resources.Load<AudioClip>("Sfx/fire");
         reloadSfx = Resources.Load<AudioClip>("Sfx/p_reload");
+
+        //컴포넌트의 활성화 여부
+        muzzleFlash.enabled = false;
     }
     
     void Update()
