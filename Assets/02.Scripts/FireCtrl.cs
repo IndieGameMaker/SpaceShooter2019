@@ -20,6 +20,7 @@ public class FireCtrl : MonoBehaviour
     private AudioSource _audio;
 
     public MeshRenderer muzzleFlash;
+    public Light fireLight;
 
     void Start()
     {
@@ -29,6 +30,7 @@ public class FireCtrl : MonoBehaviour
 
         //컴포넌트의 활성화 여부
         muzzleFlash.enabled = false;
+        fireLight.intensity = 0.0f;
     }
     
     void Update()
@@ -70,9 +72,15 @@ public class FireCtrl : MonoBehaviour
         //Quaternion rot = Quaternion.Euler(Vector3.forward * Random.Range(0, 360));
         muzzleFlash.transform.localRotation = rot;
 
+        //Light
+        fireLight.intensity = Random.Range(1.0f, 4.0f);
+
         muzzleFlash.enabled = true;
+
         yield return new WaitForSeconds(0.1f);
+        
         muzzleFlash.enabled = false;
+        fireLight.intensity = 0.0f;
     }
 
     IEnumerator Reloading()
