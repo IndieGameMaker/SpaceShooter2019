@@ -7,7 +7,14 @@ public class FireCtrl : MonoBehaviour
 {
     public Transform firePos;
     public GameObject bulletPrefab;
+    
     public AudioClip fireSfx;
+    public AudioClip reloadSfx;
+
+    public int magazineCount = 20;
+    private int shootCount = 0;
+    private bool isReloading = false;
+
     public float fireRate = 0.1f;
     private float nextFire = 0.0f;
     private AudioSource _audio;
@@ -22,7 +29,7 @@ public class FireCtrl : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            if (nextFire <= Time.time)
+            if (!isReloading && nextFire <= Time.time)
             {
                 Fire();
                 nextFire = fireRate + Time.time;
@@ -32,8 +39,21 @@ public class FireCtrl : MonoBehaviour
 
     void Fire()
     {
-        //Instantiate(생성할 프리팹, 위치, 각도)
         Instantiate(bulletPrefab, firePos.position, firePos.rotation);
         _audio.PlayOneShot(fireSfx, 0.8f);
+        isReloading = (++shootCount == magazineCount);
+        if (isReloading == true)
+        {
+            StartCoroutine(Reloading());
+        }
     }
+
+    IEnumerator Reloading()
+    {
+        _audio.PlayOneShot(reloadSfx);
+        yield return new WaitForSeconds(reloadSfx.length + 0.1f);
+        isReloading = false;
+        shootCount = 0;
+    }
+
 }
