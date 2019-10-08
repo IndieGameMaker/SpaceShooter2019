@@ -31,8 +31,8 @@ public class Explosion : MonoBehaviour
 
         for(int i=0; i<colls.Length; i++)
         {
-            Rigidbody rb = null;
-            if (colls[i].gameObject.GetComponent<Rigidbody>() == null)
+            Rigidbody rb = colls[i].gameObject.GetComponent<Rigidbody>();
+            if (rb == null)
             {
                rb = colls[i].gameObject.AddComponent<Rigidbody>();
             }
