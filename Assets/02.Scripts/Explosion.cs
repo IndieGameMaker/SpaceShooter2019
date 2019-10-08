@@ -23,13 +23,15 @@ public class Explosion : MonoBehaviour
             if (++hitCount == 3)
             {
                 ExplosionBarrel();
-                Destroy(this.gameObject);
+                Destroy(this.gameObject, 1.8f);
             }
         }
     }
 
     public void ExplosionBarrel()
     {
+        ExpSound(expSFX);
+
         GameObject effect = Instantiate(explosionEffect
                                         , transform.position
                                         , Quaternion.identity);
@@ -53,10 +55,21 @@ public class Explosion : MonoBehaviour
 
     public void ExplosionBarrelSelf()
     {
+        ExpSound(expSFX);
+        
         GameObject effect = Instantiate(explosionEffect
                                         , transform.position
                                         , Quaternion.identity);
         Destroy(effect, 1.5f);
-        Destroy(this.gameObject);
+        Destroy(this.gameObject, 1.8f);
+    }
+
+    void ExpSound(AudioClip sfx)
+    {
+        GameObject sfxObj = new GameObject("SFX");
+        AudioSource __audio = sfxObj.AddComponent<AudioSource>();
+        __audio.PlayOneShot(sfx);
+
+        Destroy(sfxObj, sfx.length);
     }
 }
