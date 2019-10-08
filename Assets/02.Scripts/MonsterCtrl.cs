@@ -61,5 +61,21 @@ public class MonsterCtrl : MonoBehaviour
         }
     }
 
+    IEnumerator MonsterAction()
+    {
+        while(!isDie)
+        {
+            switch (state)
+            {
+                case State.IDLE:
+                    break;
+                case State.TRACE:
+                    break;
+                case State.ATTACK:
+                    break;
+            }
 
+            yield return ws;
+        }
+    }
 }
