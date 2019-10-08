@@ -57,11 +57,21 @@ public class FireCtrl : MonoBehaviour
 
     IEnumerator ShowMuzzleFlash()
     {
-        //이미지의 OFFSET 변경
+        //이미지의 Offset 변경
         Vector2 offset = new Vector2(Random.Range(0,2), Random.Range(0,2)) * 0.5f; //0.0, 0.5
         muzzleFlash.material.SetTextureOffset("_MainTex", offset);
+
+        //이미지의 크기 변경
+        Vector3 size = Vector3.one * Random.Range(0.8f, 2.0f);
+        muzzleFlash.transform.localScale = size;
+
+        //이미지의 회전
+        Quaternion rot = Quaternion.Euler(0, 0, Random.Range(0, 360));
+        //Quaternion rot = Quaternion.Euler(Vector3.forward * Random.Range(0, 360));
+        muzzleFlash.transform.localRotation = rot;
+
         muzzleFlash.enabled = true;
-        yield return new WaitForSeconds(0.08f);
+        yield return new WaitForSeconds(0.1f);
         muzzleFlash.enabled = false;
     }
 
