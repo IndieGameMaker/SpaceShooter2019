@@ -52,6 +52,17 @@ public class FireCtrl : MonoBehaviour
         {
             StartCoroutine(Reloading());
         }
+        StartCoroutine(ShowMuzzleFlash());
+    }
+
+    IEnumerator ShowMuzzleFlash()
+    {
+        //이미지의 OFFSET 변경
+        Vector2 offset = new Vector2(Random.Range(0,2), Random.Range(0,2)) * 0.5f; //0.0, 0.5
+        muzzleFlash.material.SetTextureOffset("_MainTex", offset);
+        muzzleFlash.enabled = true;
+        yield return new WaitForSeconds(0.08f);
+        muzzleFlash.enabled = false;
     }
 
     IEnumerator Reloading()
