@@ -56,7 +56,7 @@ public class Explosion : MonoBehaviour
     public void ExplosionBarrelSelf()
     {
         ExpSound(expSFX);
-        
+
         GameObject effect = Instantiate(explosionEffect
                                         , transform.position
                                         , Quaternion.identity);
@@ -68,7 +68,7 @@ public class Explosion : MonoBehaviour
     {
         GameObject sfxObj = new GameObject("SFX");
         AudioSource __audio = sfxObj.AddComponent<AudioSource>();
-        __audio.PlayOneShot(sfx);
+        __audio.PlayOneShot(sfx, 0.8f);
 
         Destroy(sfxObj, sfx.length);
     }
