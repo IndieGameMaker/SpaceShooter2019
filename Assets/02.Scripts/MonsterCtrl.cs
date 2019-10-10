@@ -78,9 +78,10 @@ public class MonsterCtrl : MonoBehaviour
 
     IEnumerator MonsterAction()
     {
+        float speed = Random.Range(0.6f,1.5f);
+
         while(!isDie)
         {
-            float speed = Random.Range(0.8f,1.2f);
             switch (state)
             {
                 case State.IDLE:
