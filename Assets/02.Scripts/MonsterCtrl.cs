@@ -80,13 +80,16 @@ public class MonsterCtrl : MonoBehaviour
     {
         while(!isDie)
         {
+            float speed = Random.Range(0.8f,1.2f);
             switch (state)
             {
                 case State.IDLE:
+                    monsterAnim.SetFloat("AnimSpeed", speed);
                     monsterAnim.SetBool(hashIsTrace, false);
                     nv.isStopped = true;
                     break;
                 case State.TRACE:
+                    monsterAnim.SetFloat("AnimSpeed", speed);
                     monsterAnim.SetBool(hashIsAttack, false);
                     monsterAnim.SetBool(hashIsTrace, true);
                     nv.SetDestination(playerTr.position);
@@ -94,6 +97,7 @@ public class MonsterCtrl : MonoBehaviour
                     break;
                 case State.ATTACK:
                     nv.isStopped = true;
+                    monsterAnim.SetFloat("AnimSpeed", speed);
                     monsterAnim.SetBool(hashIsAttack, true);
                     break;
             }
