@@ -33,7 +33,7 @@ public class MonsterCtrl : MonoBehaviour
     //Monster 생명 게이지
     private int hp = 100;
 
-    void Start()
+    void Awake()
     {
         nv = GetComponent<NavMeshAgent>();
         monsterAnim = GetComponent<Animator>();
@@ -49,7 +49,10 @@ public class MonsterCtrl : MonoBehaviour
         {
             Debug.LogError("MONSTER Tag not found !!!");
         }
+    }
 
+    void OnEnable()
+    {
         StartCoroutine(CheckMonsterState());
         StartCoroutine(MonsterAction());
     }
@@ -129,6 +132,16 @@ public class MonsterCtrl : MonoBehaviour
         isDie = true;
         monsterAnim.SetTrigger(hashDie);
         StopAllCoroutines();
+        Invoke("ReturnPool", 3.0f);
+    }
+
+    void ReturnPool()
+    {
+        hp = 100;
+        isDie = false;
+        GetComponent<CapsuleCollider>().enabled = true;
+
+        this.gameObject.SetActive(false);
     }
 
     void OnTriggerEnter(Collider coll)
