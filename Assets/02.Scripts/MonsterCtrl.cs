@@ -97,4 +97,14 @@ public class MonsterCtrl : MonoBehaviour
             yield return ws;
         }
     }
+
+    void OnCollisionEnter(Collision coll)
+    {
+        if (coll.collider.CompareTag("BULLET"))
+        {
+            Destroy(coll.gameObject);
+            monsterAnim.SetTrigger(hashHit);
+        }
+    }
+
 }
