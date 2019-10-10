@@ -21,12 +21,19 @@ public class MonsterCtrl : MonoBehaviour
     private Transform playerTr;         //주인공의 위치 추출을 위한 Transform
     private Transform monsterTr;        //몬스터의 위치 추출을 위한 Transform
     private NavMeshAgent nv;            //NavMeshAgent 컴포넌트
+    private Animator monsterAnim;       //Animator 컴포넌트
 
     private WaitForSeconds ws = new WaitForSeconds(0.3f);
+    //Animator에 정의된 파라메터의 해쉬값을 미리 추출
+    private int hashIsTrace  = Animator.StringToHash("IsTrace");
+    private int hashIsAttack = Animator.StringToHash("IsAttack");
+    private int hashHit      = Animator.StringToHash("Hit");
 
     void Start()
     {
         nv = GetComponent<NavMeshAgent>();
+        monsterAnim = GetComponent<Animator>();
+
         playerTr = GameObject.FindGameObjectWithTag("PLAYER").GetComponent<Transform>();
 
         GameObject monsterObj = GameObject.FindGameObjectWithTag("MONSTER");
@@ -72,13 +79,18 @@ public class MonsterCtrl : MonoBehaviour
             switch (state)
             {
                 case State.IDLE:
+                    monsterAnim.SetBool(hashIsTrace, false);
                     nv.isStopped = true;
                     break;
                 case State.TRACE:
+                    monsterAnim.SetBool(hashIsAttack, false);
+                    monsterAnim.SetBool(hashIsTrace, true);
                     nv.SetDestination(playerTr.position);
                     nv.isStopped = false;
                     break;
                 case State.ATTACK:
+                    nv.isStopped = true;
+                    monsterAnim.SetBool(hashIsAttack, true);
                     break;
             }
 
