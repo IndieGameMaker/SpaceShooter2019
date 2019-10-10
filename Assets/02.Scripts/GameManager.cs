@@ -12,10 +12,11 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        CreateMonster();
+        CreateMonsterPool();
+        StartCoroutine(CreateMonster());
     }
 
-    void CreateMonster()
+    void CreateMonsterPool()
     {
         for(int i=0;i<maxPool;i++)
         {
@@ -24,6 +25,30 @@ public class GameManager : MonoBehaviour
             _monster.SetActive(false);
 
             monsterPool.Add(_monster);
+        }
+    }
+
+    public bool isGameOver = false;
+
+    IEnumerator CreateMonster()
+    {
+        while(!isGameOver)
+        {
+            yield return new WaitForSeconds(createTime);
+            Vector3 pos = new Vector3( Random.Range(-23.0f, 23.0f)
+                                     , 0.0f
+                                     , Random.Range(-23.0f, 23.0f));
+
+            //Pooling 
+            foreach (var _monster in monsterPool)
+            {
+                if (_monster.activeSelf == false)
+                {
+                    _monster.transform.position = pos;
+                    _monster.SetActive(true);
+                    break;
+                }
+            }
         }
     }
 }
