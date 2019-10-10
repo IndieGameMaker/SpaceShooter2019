@@ -28,6 +28,10 @@ public class MonsterCtrl : MonoBehaviour
     private int hashIsTrace  = Animator.StringToHash("IsTrace");
     private int hashIsAttack = Animator.StringToHash("IsAttack");
     private int hashHit      = Animator.StringToHash("Hit");
+    private int hashDie      = Animator.StringToHash("Die");
+
+    //Monster 생명 게이지
+    private int hp = 100;
 
     void Start()
     {
@@ -104,7 +108,19 @@ public class MonsterCtrl : MonoBehaviour
         {
             Destroy(coll.gameObject);
             monsterAnim.SetTrigger(hashHit);
+            hp -= 10;
+            if (hp <= 0)
+            {
+                MonsterDie();
+            }
         }
+    }
+
+    void MonsterDie()
+    {
+        isDie = true;
+        monsterAnim.SetTrigger(hashDie);
+        StopAllCoroutines();
     }
 
 }
